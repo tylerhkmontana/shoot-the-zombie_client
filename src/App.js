@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect
+} from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import './App.css';
 
+import WaitingRoom from './WaitingRoom'
+import EnterGame from './EnterGame'
+
 function App() {
+  const isLogged = useSelector(state => state.isLogged)
+  
+  useEffect(() => {
+    console.log(document.cookie)
+    console.log(isLogged)
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <h1 style={{color: 'crimson'}}>Shoot-the-zombie</h1>
+
+        <Route exact path="/" component={EnterGame}/>  
+        <Route path="/waiting-room">
+          {
+            isLogged ? 
+              <WaitingRoom /> :
+              <Redirect to='/' />
+          }
+        </Route>
+      </div>
+    </Router>
   );
 }
 
