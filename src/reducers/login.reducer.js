@@ -1,10 +1,16 @@
 const initialState = {
   userName: null,
-  isLogged: false
+  isLogged: false,
+  userId: null
 }
 
 const loginReducer = (state = initialState, action) => {
   switch(action.type) {
+    case 'USER_CONNECT':
+      return {
+        ...state,
+        userId: action.payload
+      }
     case 'USER_ENTER':
       return {
         ...state,

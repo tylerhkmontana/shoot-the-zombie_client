@@ -7,4 +7,9 @@ const userLogin = () => ({
   type: 'LOGIN'
 })
 
-export { userEnter, userLogin }
+const userConnect = (userId) => ({
+  type: 'USER_CONNECT',
+  payload: userId
+})
+
+export { userEnter, userLogin, userConnect }

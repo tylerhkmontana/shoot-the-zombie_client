@@ -1,0 +1,29 @@
+.Menu {
+  margin: auto;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: space-around;
+}
+
+.modal-content {
+  background-color: #a0ce95;
+  border-radius: 10px;
+  margin: 10% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  min-height: 50vh;
+  width: 40%; /* Could be more or less, depending on screen size */
+  animation: popup 0.5s;
+}
+
+@keyframes popup {
+  from {transform: scaleY(0.1);}
+  to {transform: scaleY(1);}
+}
+
+@keyframes popout {
+  from {transform: scaleY(1);}
+  to {transform: scaleY(0.1);}
+}

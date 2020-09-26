@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { userEnter, userLogin } from './actions/loggin.action'
+import { userEnter, userLogin } from '../actions/loggin.action'
 
 function EnterGame() {
   const dispatch = useDispatch()
@@ -16,14 +16,15 @@ function EnterGame() {
       height: '200px',
       justifyContent: 'space-evenly'
     }}>
-      <input placeholder="name" onChange={event => setCurrUserName(event.target.value)}/>
+      <input placeholder="name" 
+        onChange={event => setCurrUserName(event.target.value)} />
       <Link style={{
         height: '2em',
         border: '1px solid black',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
-      }} to="/waiting-room" onClick={() => {
+      }} to="/menu" onClick={() => {
         dispatch(userEnter(currUserName))
         dispatch(userLogin())
       }}>Enter</Link>

@@ -1,0 +1,24 @@
+.dashboard {
+  display: flex;
+}
+
+.user-list {
+  flex: 1;
+  border: 2px solid white;
+  height: 50vh;
+  margin: 100px 30px;
+}
+
+.gameroom-list{
+  flex: 2;
+  border: 2px solid white;
+  height: 50vh;
+  margin: 100px 30px;
+}
+
+.create-gameroom {
+  flex:1;
+  border: 2px solid white;
+  height: 50vh;
+  margin: 100px 30px;
+}
