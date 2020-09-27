@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
+import { socket } from '../App'
 import './Menu.css'
 
 function Menu() {
 
   const { push } = useHistory()
+
   const [roomCode, setRoomCode] = useState('')
   const [modalActive, setModalActive] = useState('none')
+  const [roomInfo, setRoomInfo] = useState({
+    roomTitle: "Let's play!(default)",
+    numPlayers: 4
+  })
+
 
   useEffect(() => {
     function closeModal(event) {
@@ -17,10 +24,30 @@ function Menu() {
 
     window.addEventListener('click', closeModal)
 
+    socket.on('send roomcode', roomInfo => {
+      push(`/game-room/${roomInfo.roomcode}`)
+    })
+
+    socket.on('room found', roomInfo => {
+      push(`/game-room/${roomInfo.roomcode}`)
+    })
+
+    socket.on('room not found', () => {
+      console.log("ROOM NOT FOUND!!!")
+    })
+
     return function cleanupListener () {
       window.removeEventListener('click', closeModal)
     }
   }, [])
+
+  function createGame() {
+    socket.emit('game created', roomInfo)
+  }
+
+  function findRoom() {
+    socket.emit('find room', roomCode)
+  }
 
   return (
     <div className="Menu">
@@ -38,7 +65,7 @@ function Menu() {
             flex: 1,
             height: '100%'
           }}
-          onClick={() => push(`/game-room/${roomCode}`)}>Find</button> 
+          onClick={findRoom}>Find</button> 
         
       </div>
       
@@ -46,7 +73,23 @@ function Menu() {
 
       <div className="modal" style={{display: modalActive}}>
         <div className="modal-content create-game">
+          <input placeholder="Room Title" onChange={event => setRoomInfo({
+            ...roomInfo,
+            roomTitle: event.target.value
+          })}/>
+          <input placeholder="# of players" type="number" onChange={event => setRoomInfo({
+            ...roomInfo,
+            numPlayers: event.target.value
+          })}/>
 
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-around'
+          }}>
+            
+            <button onClick={() => setModalActive(false)}>Cancel</button>
+            <button onClick={createGame}>Create</button>
+          </div>
         </div>
       </div>
     </div>

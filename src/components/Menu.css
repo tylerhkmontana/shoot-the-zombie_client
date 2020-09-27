@@ -15,7 +15,13 @@
   border: 1px solid #888;
   min-height: 50vh;
   width: 40%; /* Could be more or less, depending on screen size */
-  animation: popup 0.5s;
+  animation: popup 250ms;
+}
+
+.create-game {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 @keyframes popup {
