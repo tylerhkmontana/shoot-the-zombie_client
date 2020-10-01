@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { socket } from '../App'
 import { useDispatch } from 'react-redux'
 import { userEnter, userLogin } from '../actions/loggin.action'
 
@@ -27,6 +28,7 @@ function EnterGame() {
       }} to="/menu" onClick={() => {
         dispatch(userEnter(currUserName))
         dispatch(userLogin())
+        socket.emit('user enter', currUserName)
       }}>Enter</Link>
     </div>
   )

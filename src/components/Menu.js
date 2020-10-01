@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { roomCreated } from '../actions/gameroom.action'
 import { socket } from '../App'
 import './Menu.css'
 
 function Menu() {
 
   const { push } = useHistory()
+
+  const dispatch = useDispatch()
 
   const [roomCode, setRoomCode] = useState('')
   const [modalActive, setModalActive] = useState('none')
@@ -24,16 +28,18 @@ function Menu() {
 
     window.addEventListener('click', closeModal)
 
-    socket.on('send roomcode', roomInfo => {
+    socket.on('send roomInfo', roomInfo => {
+      dispatch(roomCreated(roomInfo))
       push(`/game-room/${roomInfo.roomcode}`)
     })
 
     socket.on('room found', roomInfo => {
+      dispatch(roomCreated(roomInfo))
       push(`/game-room/${roomInfo.roomcode}`)
     })
 
     socket.on('room not found', () => {
-      console.log("ROOM NOT FOUND!!!")
+      window.alert('room not found!')
     })
 
     return function cleanupListener () {
@@ -79,7 +85,7 @@ function Menu() {
           })}/>
           <input placeholder="# of players" type="number" onChange={event => setRoomInfo({
             ...roomInfo,
-            numPlayers: event.target.value
+            numPlayers: +event.target.value
           })}/>
 
           <div style={{
