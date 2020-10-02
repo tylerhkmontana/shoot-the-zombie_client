@@ -3,4 +3,8 @@ const roomCreated = roomInfo => ({
   payload: roomInfo
 })
 
-export { roomCreated }
+const updateUserList = userList => ({
+  type: 'UPDATE_USERLIST',
+  payload: userList
+})
+export { roomCreated, updateUserList }

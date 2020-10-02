@@ -6,7 +6,6 @@ import { socket } from '../App'
 import './Menu.css'
 
 function Menu() {
-
   const { push } = useHistory()
 
   const dispatch = useDispatch()
@@ -15,7 +14,7 @@ function Menu() {
   const [modalActive, setModalActive] = useState('none')
   const [roomInfo, setRoomInfo] = useState({
     roomTitle: "Let's play!(default)",
-    numPlayers: 4
+    numPlayers: 0
   })
 
 
@@ -38,6 +37,10 @@ function Menu() {
       push(`/game-room/${roomInfo.roomcode}`)
     })
 
+    socket.on('full house', () => {
+      window.alert('The room is full!')
+    })
+
     socket.on('room not found', () => {
       window.alert('room not found!')
     })
@@ -48,7 +51,11 @@ function Menu() {
   }, [])
 
   function createGame() {
-    socket.emit('game created', roomInfo)
+    if (roomInfo.numPlayers === 0) {
+      window.alert("# of players must be > 0")
+    } else {
+      socket.emit('game created', roomInfo)
+    }
   }
 
   function findRoom() {

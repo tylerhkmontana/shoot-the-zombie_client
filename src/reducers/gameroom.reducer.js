@@ -11,6 +11,11 @@ const gameroomReducer = (state = initialState, actions) => {
       return {
         ...actions.payload
       }
+    case 'UPDATE_USERLIST':
+      return {
+        ...state,
+        players: actions.payload
+      }
     default:
       return state
   }
