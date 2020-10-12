@@ -6,7 +6,7 @@
   color: black;
 }
 
-input {
+input, select {
   height: 2em;
   text-align: center;
 }
@@ -17,6 +17,7 @@ input::placeholder {
 
 button {
   height: 2em;
+  cursor: pointer;
 }
 
 .modal {

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { socket } from '../App'
 import { useDispatch } from 'react-redux'
-import { userEnter, userLogin } from '../actions/loggin.action'
+import { userEnter, userLogin } from '../actions/login.action'
 
 function EnterGame() {
   const dispatch = useDispatch()

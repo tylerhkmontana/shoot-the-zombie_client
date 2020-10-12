@@ -13,3 +13,24 @@
   min-height: 60vh;
   margin: 50px 30px;
 }
+
+.table-formation {
+  height: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.table-formation-player {
+  margin: 0 10px;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+
+/* For PC ONLY */
+/* .table-formation-player:hover {
+  background-color: crimson;
+  color: white;
+} */

@@ -5,7 +5,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { userConnect } from './actions/loggin.action'
+import { userConnect } from './actions/login.action'
 import socketIOClient from 'socket.io-client'
 import './App.css';
 
@@ -35,16 +35,18 @@ function App() {
 
         <Route exact path="/" component={EnterGame}/>  
         <Route path="/menu">
-          {/* {
+          {
             isLogged ? 
               <Menu/> :
               <Redirect to='/' />
-          } */}
-
-          <Menu/>
+          }
         </Route>
         <Route path="/game-room/:roomcode">
-          <Gameroom />
+        {
+            isLogged ? 
+              <Gameroom /> :
+              <Redirect to='/' />
+          }
         </Route>
       </div>
     </Router>
