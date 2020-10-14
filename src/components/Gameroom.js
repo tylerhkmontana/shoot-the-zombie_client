@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
 import { updateUserList } from '../actions/gameroom.action'
 import { socket } from '../App'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,6 +11,7 @@ function Gameroom() {
   const roomInfo = useSelector(state => state.gameroom)
   const userId = useSelector(state => state.login.userId)
   const dispatch = useDispatch()
+  const { push } = useHistory()
 
   const [isRoomMaster, setIsRoomMaster] = useState(false)
   const [gameSetting, setGameSetting] = useState({
@@ -41,6 +43,10 @@ function Gameroom() {
       dispatch(updateUserList(payload.roomInfo.players))
       let leavingPlayer = payload.leavingUser
       setMessages(messages => [...messages, `${leavingPlayer.userName} has left the room`])
+    })
+
+    socket.on('game started', () => {
+      push('/in-game')
     })
   }, [])
 
@@ -74,6 +80,7 @@ function Gameroom() {
     //   ...gameSetting,
     //   tableFormation: [...currTableFormation]
     // }))
+
     const targetPlayer = event.target.id
     const currTableFormation = [...gameSetting.tableFormation]
 
@@ -101,6 +108,11 @@ function Gameroom() {
       { backgroundColor: 'crimson' } : {}
   }
 
+  function startGame() {
+    socket.emit('start game', gameSetting)
+    push('/in-game')
+  }
+
   const tableFormation = () => {
     let formation = []
       gameSetting.tableFormation.forEach(player => {
@@ -110,11 +122,13 @@ function Gameroom() {
             id={player.id}
             className="table-formation-player" 
             style={selectedPlayerStyle(player)}
+
             // DRAG AND DROP ver for PC ver
             // onDragStart={event => event.dataTransfer.setData("player", event.target.id)}
             // onDrop={event => changeTableFormation(event)}
             // onDragOver={event => event.preventDefault()}
             // draggable="true"
+
             onClick={event => changeTableFormation(event)}
             >
               {player.userName}
@@ -177,7 +191,7 @@ function Gameroom() {
           {
             isRoomMaster ?
               <div>
-                <button>Start</button>
+                <button onClick={startGame}>Start</button>
               </div> :
               ''
           }

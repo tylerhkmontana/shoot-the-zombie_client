@@ -12,6 +12,7 @@ import './App.css';
 import Menu from './components/Menu'
 import EnterGame from './components/EnterGame'
 import Gameroom from './components/Gameroom'
+import InGame from './components/InGame'
 
 var socket
 const ENDPOINT = process.env.ENDPOINT || 'http://127.0.0.1:5000'
@@ -42,9 +43,16 @@ function App() {
           }
         </Route>
         <Route path="/game-room/:roomcode">
-        {
+          {
             isLogged ? 
               <Gameroom /> :
+              <Redirect to='/' />
+          }
+        </Route>
+        <Route path="/in-game">
+          {
+            isLogged ? 
+              <InGame /> :
               <Redirect to='/' />
           }
         </Route>
