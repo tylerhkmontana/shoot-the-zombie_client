@@ -16,26 +16,16 @@ function Gameroom() {
   const [isRoomMaster, setIsRoomMaster] = useState(false)
   const [gameSetting, setGameSetting] = useState({
     numBullets: 1,
-    infectionRate: 5000,
-    tableFormation: []
+    infectionRate: 5000
   })
-
   const [messages, setMessages] = useState([])
-  const [selectedPlayer, setSelectedPlayer] = useState(null)
+
 
   
   useEffect(() => {
     socket.on('user join gameroom', newRoomInfo => {
       dispatch(updateUserList(newRoomInfo.players))
       let joinedPlayer = newRoomInfo.players[newRoomInfo.players.length - 1]
-
-      if (newRoomInfo.players.length === newRoomInfo.numPlayers) {
-        setGameSetting(gameSetting => ({
-          ...gameSetting,
-          tableFormation: newRoomInfo.players
-        }))
-      }
-
       setMessages(messages => [...messages, `${joinedPlayer.userName} has joined the room`])
     })
 
@@ -51,11 +41,6 @@ function Gameroom() {
   }, [])
 
   useEffect(() => {
-    setGameSetting({
-      ...gameSetting,
-      tableFormation: [...roomInfo.players]
-    })
-
     const roomMaster = roomInfo.players[0]
     
     if (roomMaster.id === userId) {
@@ -63,82 +48,11 @@ function Gameroom() {
     }
   }, [])
 
-  function changeTableFormation(event) {
-    // DRAG AND DROP for PC ver 
-    // const draggedPlayer = event.dataTransfer.getData("player")
-    // const targetPlayer = event.target.id
-    // const currTableFormation = [...gameSetting.tableFormation]
-
-    // const draggedPlayerIndex = currTableFormation.findIndex(player => player.id === draggedPlayer)
-    // const targetPlayerIndex = currTableFormation.findIndex(player => player.id === targetPlayer)
-
-    // const temp = currTableFormation[targetPlayerIndex]
-    // currTableFormation[targetPlayerIndex] = currTableFormation[draggedPlayerIndex]
-    // currTableFormation[draggedPlayerIndex] = temp
-
-    // setGameSetting(gameSetting => ({
-    //   ...gameSetting,
-    //   tableFormation: [...currTableFormation]
-    // }))
-
-    const targetPlayer = event.target.id
-    const currTableFormation = [...gameSetting.tableFormation]
-
-    if (selectedPlayer) {
-      if (selectedPlayer !== targetPlayer) {
-        const targetPlayerIndex = currTableFormation.findIndex(player => player.id === targetPlayer)
-        const selectedPlayerIndex = currTableFormation.findIndex(player => player.id === selectedPlayer)
-
-        const temp = currTableFormation[selectedPlayerIndex]
-        currTableFormation[selectedPlayerIndex] = currTableFormation[targetPlayerIndex]
-        currTableFormation[targetPlayerIndex] = temp
-        setGameSetting(gameSetting => ({
-          ...gameSetting,
-          tableFormation: [...currTableFormation]
-        }))
-      }
-      setSelectedPlayer(null)
-    } else {
-      setSelectedPlayer(targetPlayer)
-    }
-  }
-
-  function selectedPlayerStyle(player) {
-    return player.id === selectedPlayer ?
-      { backgroundColor: 'crimson' } : {}
-  }
-
   function startGame() {
-    socket.emit('start game', gameSetting)
+    let inGameRoomInfo = { ...roomInfo }
+    inGameRoomInfo.gameSetting = gameSetting
+    socket.emit('start game', inGameRoomInfo)
     push('/in-game')
-  }
-
-  const tableFormation = () => {
-    let formation = []
-      gameSetting.tableFormation.forEach(player => {
-      formation.push(
-        <div key={player.id}>
-           <span 
-            id={player.id}
-            className="table-formation-player" 
-            style={selectedPlayerStyle(player)}
-
-            // DRAG AND DROP ver for PC ver
-            // onDragStart={event => event.dataTransfer.setData("player", event.target.id)}
-            // onDrop={event => changeTableFormation(event)}
-            // onDragOver={event => event.preventDefault()}
-            // draggable="true"
-
-            onClick={event => changeTableFormation(event)}
-            >
-              {player.userName}
-          </span>
-          <FontAwesomeIcon key={player.id} icon={faArrowCircleRight} />
-        </div>
-       
-      )
-    })
-    return formation
   }
 
   return (
@@ -179,12 +93,6 @@ function Gameroom() {
                 <option value="10000">10 sec</option>
                 <option value="15000">15 sec</option>
               </select>
-              <div className="table-formation">
-                { roomInfo.players.length === roomInfo.numPlayers ?
-                    tableFormation() :
-                    <p>waiting for players...</p>
-                }
-              </div>
             </div> :
             ''
           }
