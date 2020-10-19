@@ -21,6 +21,8 @@ function InGame() {
     socket.on('appointed to civilian', () => {
       console.log("YOU ARE THE CIVILIAN")
     })
+
+    
   })
 
   return (
