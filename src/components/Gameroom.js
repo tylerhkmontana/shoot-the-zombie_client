@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import { updateUserList } from '../actions/gameroom.action'
 import { socket } from '../App'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import "./Gameroom.css"
  
 function Gameroom() {
