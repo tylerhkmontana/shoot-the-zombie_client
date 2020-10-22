@@ -29,9 +29,7 @@ function InGame() {
       console.log("YOU ARE THE CIVILIAN")
       push("/in-game/civilian")
     })
-
-    
-  })
+  }, [])
 
   return (
     <div>

@@ -50,7 +50,6 @@ function Gameroom() {
     let inGameRoomInfo = { ...roomInfo }
     inGameRoomInfo.gameSetting = gameSetting
     socket.emit('start game', inGameRoomInfo)
-    push('/in-game')
   }
 
   return (
