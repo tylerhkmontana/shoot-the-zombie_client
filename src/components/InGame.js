@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { appointedTo } from '../actions/inGame.action'
 import { Route, useHistory } from 'react-router-dom'
 import { socket } from '../App'
 
@@ -12,6 +13,7 @@ import Gameover from './Gameover'
 function InGame() {
 
   const userId = useSelector(state => state.login.userId)
+  const dispatch = useDispatch()
   const { push } = useHistory()
 
   useEffect(() => {
@@ -19,16 +21,19 @@ function InGame() {
     
     socket.on('appointed to zombie', () => {
       console.log("YOU ARE THE ZOMBIE")
+      dispatch(appointedTo('zombie'))
       push("/in-game/zombie")
     })
 
     socket.on('appointed to leader', () => {
       console.log("YOU ARE THE LEADER")
+      dispatch(appointedTo('civilian'))
       push("/in-game/leader")
     })
 
     socket.on('appointed to civilian', () => {
       console.log("YOU ARE THE CIVILIAN")
+      dispatch(appointedTo('civilian'))
       push("/in-game/civilian")
     })
 
@@ -37,8 +42,8 @@ function InGame() {
       push("/in-game/dead")
     })
 
-    socket.on("Gameover", () => {
-      push("/in-game/gameover")
+    socket.on("Gameover", winner => {
+      push(`/in-game/gameover/${winner}`)
     })
   }, [])
 
@@ -49,7 +54,7 @@ function InGame() {
       <Route path="/in-game/zombie" component={Zombie}/>
       <Route path="/in-game/leader" component={Leader}/>
       <Route path="/in-game/dead" component={Dead} />
-      <Route path="/in-game/gameover" component={Gameover} />
+      <Route path="/in-game/gameover/:winner" component={Gameover} />
     </div>
   )
 }

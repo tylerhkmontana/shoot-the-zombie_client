@@ -44,7 +44,7 @@ function Gameroom() {
     if (roomMaster.id === userId) {
       setIsRoomMaster(true)
     }
-  }, [])
+  }, [roomInfo])
 
   function startGame() {
     let inGameRoomInfo = { ...roomInfo }

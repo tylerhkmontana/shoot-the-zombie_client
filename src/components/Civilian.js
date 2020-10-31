@@ -8,14 +8,9 @@ function Civilian() {
 
   useEffect(() => {
     socket.emit("request gif")
-
-    socket.on("appointed to zombie", () => {
-      push("/in-game/zombie")
-    })
-
+    
     socket.on("response gif", response => {
       setGifData(response)
-      console.log(response)
     })
   }, [])
 
