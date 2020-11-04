@@ -43,7 +43,7 @@ function InGame() {
     })
 
     socket.on("Gameover", winner => {
-      push(`/in-game/gameover/${winner}`)
+      setTimeout(() => push(`/in-game/gameover/${winner}`), 3000)
     })
   }, [])
 

@@ -6,6 +6,12 @@ import './Leader.css'
 function Leader() {
 
   const userId = useSelector(state => state.login.userId)
+  const [leadersPower, setLeaderPower] = useState({
+    numBullets: 0,
+    targetPlayers: []
+  })
+
+  console.log("Rendering")
 
   useEffect(() => {
     socket.emit("I am the leader")
@@ -16,12 +22,20 @@ function Leader() {
         targetPlayers: payload.targetPlayers
       })
     })
-  }, [])
 
-  const [leadersPower, setLeaderPower] = useState({
-    numBullets: 0,
-    targetPlayers: []
-  })
+    socket.on("Gameover", () => {
+      console.log("clearing interval")
+      clearInterval(reloadBullet)
+    })
+
+    const reloadBullet = setInterval(() => {
+      socket.emit("reload bullet")
+    }, 3000)
+
+    return function cleanup() {
+      clearInterval(reloadBullet)
+    }
+  }, [])
 
   function killPlayer(targetId) {
     socket.emit("leader shoots player", targetId)
