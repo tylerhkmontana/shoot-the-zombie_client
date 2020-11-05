@@ -30,7 +30,8 @@ function Leader() {
 
     const reloadBullet = setInterval(() => {
       socket.emit("reload bullet")
-    }, 3000)
+      console.log("Reloading")
+    }, 5000)
 
     return function cleanup() {
       clearInterval(reloadBullet)
