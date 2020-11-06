@@ -54,7 +54,7 @@ function Menu() {
     if (roomInfo.numPlayers === 0) {
       window.alert("# of players must be > 0")
     } else {
-      socket.emit('game created', roomInfo)
+      socket.emit('room created', roomInfo)
     }
   }
 

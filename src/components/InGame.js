@@ -17,7 +17,7 @@ function InGame() {
   const { push } = useHistory()
 
   useEffect(() => {
-    socket.emit('what is my role', userId)
+    // socket.emit('what is my role', userId)
     
     socket.on('appointed to zombie', () => {
       console.log("YOU ARE THE ZOMBIE")

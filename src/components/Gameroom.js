@@ -47,8 +47,7 @@ function Gameroom() {
   }, [roomInfo])
 
   function startGame() {
-    let inGameRoomInfo = { ...roomInfo }
-    inGameRoomInfo.gameSetting = gameSetting
+    let inGameRoomInfo = { ...roomInfo, gameSetting }
     socket.emit('start game', inGameRoomInfo)
   }
 

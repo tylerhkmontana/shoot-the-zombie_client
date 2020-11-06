@@ -20,7 +20,7 @@ function Civilian() {
     <div>
       <h1>You are civilian!</h1>
       {
-        gifData ? <Gif gif={gifData} width={300}/> : ''
+        gifData ? <Gif gif={gifData} width={300}/> : <p>NO GIF RECEIVED</p>
       }
     </div>
   )
