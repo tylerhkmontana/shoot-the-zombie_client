@@ -47,8 +47,12 @@ function Gameroom() {
   }, [roomInfo])
 
   function startGame() {
-    let inGameRoomInfo = { ...roomInfo, gameSetting }
-    socket.emit('start game', inGameRoomInfo)
+    if (roomInfo.players.length === roomInfo.numPlayers) {
+      let inGameRoomInfo = { ...roomInfo, gameSetting }
+      socket.emit('start game', inGameRoomInfo)
+    } else {
+      window.alert("The room is not full yet!")
+    }
   }
 
   return (

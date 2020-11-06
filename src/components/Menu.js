@@ -42,7 +42,11 @@ function Menu() {
     })
 
     socket.on('room not found', () => {
-      window.alert('room not found!')
+      window.alert('The room is not found!')
+    })
+
+    socket.on('room in game', () => {
+      window.alert('The room is in game!')
     })
 
     return function cleanupListener () {

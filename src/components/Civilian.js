@@ -9,9 +9,9 @@ function Civilian() {
   useEffect(() => {
     socket.emit("request gif")
     
-    socket.on("response gif", response => {
-      setGifData(response)
-    })
+    socket.on("response gif", response => setGifData(response))
+
+    socket.on("gif updated", response => setGifData(response))
   }, [])
 
   const [gifData, setGifData] = useState(null)

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { socket } from '../App'
 import { useSelector } from 'react-redux'
+import { Gif } from '@giphy/react-components'
 import './Leader.css'
 
 function Leader() {
@@ -11,10 +12,16 @@ function Leader() {
     targetPlayers: []
   })
 
-  console.log("Rendering")
+  const [gifData, setGifData] = useState(null)
 
   useEffect(() => {
     socket.emit("I am the leader")
+
+    socket.emit("request gif")
+    
+    socket.on("response gif", response => setGifData(response))
+
+    socket.on("gif updated", response => setGifData(response))
 
     socket.on("receive bullets", payload => {
       setLeaderPower({
@@ -51,6 +58,10 @@ function Leader() {
         leadersPower.targetPlayers.map(player => {
           return <button className="target-players" onClick={() => killPlayer(player.id)} key={player.id}>{player.userName}</button>
         })
+      }
+
+      {
+        gifData ? <Gif gif={gifData} width={300}/> : <p>NO GIF RECEIVED</p>
       }
     </div>
   )
