@@ -16,21 +16,14 @@ function Gameroom() {
     numBullets: 1,
     infectionRate: 5000
   })
-  const [messages, setMessages] = useState([])
-
-
   
   useEffect(() => {
     socket.on('user join gameroom', newRoomInfo => {
       dispatch(updateUserList(newRoomInfo.players))
-      let joinedPlayer = newRoomInfo.players[newRoomInfo.players.length - 1]
-      setMessages(messages => [...messages, `${joinedPlayer.userName} has joined the room`])
     })
 
     socket.on('user leave gameroom', payload => {
       dispatch(updateUserList(payload.roomInfo.players))
-      let leavingPlayer = payload.leavingUser
-      setMessages(messages => [...messages, `${leavingPlayer.userName} has left the room`])
     })
 
     socket.on('game started', () => {
@@ -53,6 +46,11 @@ function Gameroom() {
     } else {
       window.alert("The room is not full yet!")
     }
+  }
+
+  function exitRoom() {
+    socket.emit("user exit room")
+    push("/menu")
   }
 
   return (
@@ -103,14 +101,9 @@ function Gameroom() {
               </div> :
               ''
           }
+          <button onClick={exitRoom}>Exit</button>
         </div>
       </div>
-      
-      {
-        messages.map((msg, i) => {
-          return <p key={i}>{ msg }</p>
-        })
-      }
     </div>
   )
 }

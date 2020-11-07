@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { roomCreated } from '../actions/gameroom.action'
 import { appointedTo } from '../actions/inGame.action'
 import { Route, useHistory } from 'react-router-dom'
 import { socket } from '../App'
@@ -11,8 +12,6 @@ import Dead from './Dead'
 import Gameover from './Gameover'
 
 function InGame() {
-
-  const userId = useSelector(state => state.login.userId)
   const dispatch = useDispatch()
   const { push } = useHistory()
 
@@ -44,6 +43,11 @@ function InGame() {
 
     socket.on("Gameover", winner => {
       setTimeout(() => push(`/in-game/gameover/${winner}`), 3000)
+    })
+
+    socket.on("move to room", roomInfo => {
+      dispatch(roomCreated(roomInfo))
+      push(`/game-room/${roomInfo.roomcode}`)
     })
   }, [])
 
