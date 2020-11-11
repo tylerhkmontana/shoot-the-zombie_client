@@ -1,35 +1,38 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { socket } from '../App'
 import { useDispatch } from 'react-redux'
 import { userEnter, userLogin } from '../actions/login.action'
+import './EnterGame.css'
+
 
 function EnterGame() {
   const dispatch = useDispatch()
+  const { push } = useHistory()
+  const [currUserName, setCurrUserName] = useState('')
 
-  const [currUserName, setCurrUserName] = useState(null)
+  function enter() {
+    if(currUserName === '') {
+      window.alert("What is your name?")
+    } else {
+      console.log(currUserName)
+      dispatch(userEnter(currUserName))
+      dispatch(userLogin())
+      socket.emit('user enter', currUserName)
+      push('/menu')
+    }
+  }
+
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      width: '30%',
-      margin: '200px auto 0px auto',
-      height: '200px',
-      justifyContent: 'space-evenly'
-    }}>
-      <input placeholder="name" 
-        onChange={event => setCurrUserName(event.target.value)} />
-      <Link style={{
-        height: '2em',
-        border: '1px solid black',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }} to="/menu" onClick={() => {
-        dispatch(userEnter(currUserName))
-        dispatch(userLogin())
-        socket.emit('user enter', currUserName)
-      }}>Enter</Link>
+    <div className="Entergame">
+      <img className="welcome-zombie" src="entrance_zombie.gif"/>
+      <div className="input-group">
+        <input placeholder="name" 
+          onChange={event => setCurrUserName(event.target.value.trim())} />
+        <button 
+          className="enter-button"
+          to="/menu" onClick={enter}>Enter</button>
+      </div>
     </div>
   )
 }

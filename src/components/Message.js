@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { deleteMessage } from '../actions/message.action'
 import './Message.css'
 

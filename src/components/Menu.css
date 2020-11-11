@@ -1,6 +1,6 @@
 .Menu {
   margin: auto;
-  width: 50vw;
+  width: 70vw;
   display: flex;
   flex-direction: column;
   height: 50vh;
@@ -8,20 +8,59 @@
 }
 
 .modal-content {
-  background-color: #a0ce95;
-  border-radius: 10px;
-  margin: 10% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  min-height: 50vh;
-  width: 40%; /* Could be more or less, depending on screen size */
+  background: url('./images/Wooden-Sign-Transparent.png');
+  background-size: 95vw 50vh;
+  background-repeat: no-repeat;
+  margin: 15vh auto;
+  height: 50vh;
+  width: 95vw;
   animation: popup 250ms;
 }
 
 .create-game {
+  padding: 10px 0px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+}
+
+.create-game input {
+  margin: 10px;
+  background-color: transparent;
+  border: 1px solid white;
+  color: black;
+}
+
+.create-game input::placeholder {
+  color: white;
+}
+
+.create-game .num-players-input {
+  margin: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.num-players-input p {
+  color: white;
+}
+
+.create-game .button-group {
+  margin-top: 20px;
+  display: flex;
   justify-content: space-around;
+}
+
+.create-game button {
+  border: none;
+  background-color: crimson;
+  color: white;
+  padding: 5px;
+}
+
+.create-game button:hover {
+  background-color: white;
+  color: crimson;
 }
 
 @keyframes popup {

@@ -1,23 +1,32 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Grandstander';
+  font-family: 'Syne Mono', monospace;
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 input, select {
   height: 2em;
   text-align: center;
+  background-color: transparent;
+  outline: none;
+  color: white;
+  border: 1px solid crimson;
 }
 
 input::placeholder {
   text-align: center;
+  color: crimson;
 }
 
 button {
   height: 2em;
   cursor: pointer;
+  outline: none;
+  border: 1px solid crimson;
+  background-color: transparent;
+  color: crimson;
 }
 
 .modal {

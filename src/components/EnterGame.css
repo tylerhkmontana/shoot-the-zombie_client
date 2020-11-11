@@ -1,0 +1,26 @@
+.Entergame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 70px auto 0px auto;
+  height: 70vh;
+  justify-content: space-evenly;
+}
+
+.input-group {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 150px;
+  width: 90%;
+}
+
+.Entergame > .input-group > .enter-button {
+  height: 2em;
+  background-color: crimson;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

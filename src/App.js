@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -45,7 +45,7 @@ function App() {
           }
         </div>
        
-        <h1 style={{color: 'crimson'}}>Shoot-the-zombie</h1>
+        <h1 style={{color: 'crimson'}}>Shoot the zombie</h1>
 
         <Route exact path="/" component={EnterGame}/>  
         <Route path="/menu">

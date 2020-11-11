@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { roomCreated } from '../actions/gameroom.action'
+import Icon from "@mdi/react"
+import { mdiPlusBox, mdiMinusBox } from '@mdi/js'
 import { socket } from '../App'
 import './Menu.css'
 
@@ -14,7 +16,7 @@ function Menu() {
   const [modalActive, setModalActive] = useState('none')
   const [roomInfo, setRoomInfo] = useState({
     roomTitle: "Let's play!(default)",
-    numPlayers: 0
+    numPlayers: 4
   })
 
 
@@ -89,23 +91,50 @@ function Menu() {
       <button onClick={() => setModalActive('block')}>Create Game</button>
 
       <div className="modal" style={{display: modalActive}}>
-        <div className="modal-content create-game">
-          <input placeholder="Room Title" onChange={event => setRoomInfo({
-            ...roomInfo,
-            roomTitle: event.target.value
-          })}/>
-          <input placeholder="# of players" type="number" onChange={event => setRoomInfo({
-            ...roomInfo,
-            numPlayers: +event.target.value
-          })}/>
+        <div className="modal-content">
+          <div className="create-game">
+            <input placeholder="Room Title" onChange={event => setRoomInfo({
+              ...roomInfo,
+              roomTitle: event.target.value
+            })}/>
+            <div className="num-players-input">
+              <Icon 
+                path={mdiMinusBox} 
+                size={1}
+                color="white"
+                onClick={() => {
+                  let numPlayers = roomInfo.numPlayers
+                  if (numPlayers === 4) {
+                    window.alert("You require at least 4 people in a room")
+                  } else {
+                    setRoomInfo({
+                      ...roomInfo,
+                      numPlayers: --numPlayers
+                    })
+                  } 
+                }}/>
+              <p>{roomInfo.numPlayers}</p>
+              <Icon 
+                path={mdiPlusBox}
+                size={1}
+                color="white"
+                onClick={() => {
+                  let numPlayers = roomInfo.numPlayers
+                  if (numPlayers === 14) {
+                    window.alert("You reached maximum number of players")
+                  } else {
+                    setRoomInfo({
+                      ...roomInfo,
+                      numPlayers: ++numPlayers
+                    })
+                  } 
+                }}/>
+            </div>
 
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-around'
-          }}>
-            
-            <button onClick={() => setModalActive(false)}>Cancel</button>
-            <button onClick={createGame}>Create</button>
+            <div className="button-group">
+              <button onClick={() => setModalActive(false)}>Cancel</button>
+              <button onClick={createGame}>Create</button>
+            </div>
           </div>
         </div>
       </div>
