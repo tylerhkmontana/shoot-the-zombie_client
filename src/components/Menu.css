@@ -1,18 +1,18 @@
 .Menu {
   margin: auto;
-  width: 70vw;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  height: 400px;
   justify-content: space-around;
 }
 
 .modal-content {
   background: url('./images/Wooden-Sign-Transparent.png');
-  background-size: 95vw 50vh;
+  background-size: 95vw 100%;
   background-repeat: no-repeat;
-  margin: 15vh auto;
-  height: 50vh;
+  margin: 30% auto;
+  height: 50%;
   width: 95vw;
   animation: popup 250ms;
 }

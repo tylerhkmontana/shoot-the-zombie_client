@@ -3,13 +3,12 @@
   flex-direction: column;
   width: 100%;
   margin: 70px auto 0px auto;
-  height: 70vh;
   justify-content: space-evenly;
 }
 
-.input-group {
+.Entergame > .input-group {
   display: flex;
-  margin: 0 auto;
+  margin: 20px auto;
   flex-direction: column;
   justify-content: space-evenly;
   height: 150px;

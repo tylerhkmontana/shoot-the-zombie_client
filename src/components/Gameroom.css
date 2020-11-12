@@ -1,3 +1,9 @@
+.Gameroom {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
 .room-info {
   width: 90vw;
   display: flex;
@@ -12,18 +18,33 @@
   height: 20vh;
   width: 90vw;
   margin: auto;
-  padding: 5px;
+  /* padding: 5px; */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: auto;
+} 
+
+.user-list p {
+  margin: 0px 5px;
+}
+
+.exit-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+
+.game-setting {
+  width: 90vw;
+  margin: 10px auto;
   display: flex;
   flex-direction: column;
 }
 
-.game-setting {
-  width: 93vw;
-  min-height: 60vh;
-  margin: 10px auto;
-}
-
-.infection-rate-setting {
+.game-setting > .setting {
+  margin-bottom: 10px;
   display: flex;
 }
 
@@ -41,6 +62,17 @@
   cursor: pointer;
 }
 
+.Gameroom > .button-group {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 50px auto;
+}
+
+.Gameroom > .button-group > button {
+  margin-bottom: 10px;
+}
 
 /* For PC ONLY */
 /* .table-formation-player:hover {
