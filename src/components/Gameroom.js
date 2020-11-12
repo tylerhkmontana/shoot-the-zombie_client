@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import { updateUserList } from '../actions/gameroom.action'
 import { socket } from '../App'
+import Icon from '@mdi/react'
+import { mdiMinusBox, mdiPlusBox } from '@mdi/js'
 import "./Gameroom.css"
  
 function Gameroom() {
@@ -55,14 +57,14 @@ function Gameroom() {
 
   return (
     <div className="Gameroom">
-      <h4 style={{
-        textAlign: 'center'
-      }}>
-        TITLE: {roomInfo.roomTitle} ROOM_CODE: {roomInfo.roomcode}
-      </h4>
-      
+      <div className="room-info">
+        <h4>TITLE: {roomInfo.roomTitle}</h4>
+        <h4>ROOM_CODE: {roomInfo.roomcode}</h4>
+      </div>
+    
       <div style={{
-        display: 'flex'
+        display: 'flex',
+        flexDirection: 'column'
       }}>
         <div className="user-list">
           <p>{`${roomInfo.players.length}/${roomInfo.numPlayers}`}</p>
@@ -82,7 +84,22 @@ function Gameroom() {
         </div>
 
         <div className="game-setting">
-          {
+          <div className="infection-rate-setting">
+            <p style={{flex: 1}}>Infection_rate:</p>
+            <div style={{display: 'flex', justifyContent: 'space-between', flex: 1}}>
+              <Icon 
+                path={mdiMinusBox} 
+                size={1}
+                color="#00fe00"/>
+              <p>{gameSetting.infectionRate /1000} s</p>
+              <Icon 
+                path={mdiPlusBox}
+                size={1}
+                color="#00fe00"/>
+            </div>
+          </div>
+          
+          {/* {
             isRoomMaster ? 
             <div>
               <input placeholder="# of bullets" type="number"/>
@@ -93,15 +110,15 @@ function Gameroom() {
               </select>
             </div> :
             ''
-          }
-          {
-            isRoomMaster ?
-              <div>
-                <button onClick={startGame}>Start</button>
-              </div> :
-              ''
-          }
-          <button onClick={exitRoom}>Exit</button>
+          } */}
+          <div>
+            <button onClick={exitRoom}>Exit</button>
+            { 
+              isRoomMaster ? 
+                <button onClick={startGame}>Start</button> :
+                ''
+            }
+          </div> 
         </div>
       </div>
     </div>

@@ -18,9 +18,4 @@
 
 .Entergame > .input-group > .enter-button {
   height: 2em;
-  background-color: crimson;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

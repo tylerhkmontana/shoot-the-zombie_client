@@ -1,17 +1,30 @@
+.room-info {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 10px auto;
+}
+
 .user-list {
-  border: 2px solid white;
-  flex: 1;
-  min-height: 60vh;
-  margin: 50px 30px;
+  border: 2px solid #00fe00;
+  height: 20vh;
+  width: 90vw;
+  margin: auto;
+  padding: 5px;
   display: flex;
   flex-direction: column;
 }
 
 .game-setting {
-  border: 2px solid white;
-  flex: 3;
+  width: 93vw;
   min-height: 60vh;
-  margin: 50px 30px;
+  margin: 10px auto;
+}
+
+.infection-rate-setting {
+  display: flex;
 }
 
 .table-formation {

@@ -68,6 +68,30 @@ function Menu() {
     socket.emit('find room', roomCode)
   }
 
+  function increaseNumPlayer () {
+    let numPlayers = roomInfo.numPlayers
+    if (numPlayers === 14) {
+      window.alert("You reached maximum number of players")
+    } else {
+      setRoomInfo({
+        ...roomInfo,
+        numPlayers: ++numPlayers
+      })
+    } 
+  }
+
+  function decreaseNumPlayer() {
+    let numPlayers = roomInfo.numPlayers
+    if (numPlayers === 4) {
+      window.alert("You require at least 4 people in a room")
+    } else {
+      setRoomInfo({
+        ...roomInfo,
+        numPlayers: --numPlayers
+      })
+    } 
+  }
+
   return (
     <div className="Menu">
       <div style={{
@@ -76,7 +100,7 @@ function Menu() {
       }}>
         <input 
           placeholder="Type Room Code" 
-          style={{flex: 4}}
+          style={{flex: 4, marginRight: '5px'}}
           onChange={event => setRoomCode(event.target.value)}/>
     
         <button 
@@ -102,33 +126,13 @@ function Menu() {
                 path={mdiMinusBox} 
                 size={1}
                 color="white"
-                onClick={() => {
-                  let numPlayers = roomInfo.numPlayers
-                  if (numPlayers === 4) {
-                    window.alert("You require at least 4 people in a room")
-                  } else {
-                    setRoomInfo({
-                      ...roomInfo,
-                      numPlayers: --numPlayers
-                    })
-                  } 
-                }}/>
+                onClick={decreaseNumPlayer}/>
               <p>{roomInfo.numPlayers}</p>
               <Icon 
                 path={mdiPlusBox}
                 size={1}
                 color="white"
-                onClick={() => {
-                  let numPlayers = roomInfo.numPlayers
-                  if (numPlayers === 14) {
-                    window.alert("You reached maximum number of players")
-                  } else {
-                    setRoomInfo({
-                      ...roomInfo,
-                      numPlayers: ++numPlayers
-                    })
-                  } 
-                }}/>
+                onClick={increaseNumPlayer}/>
             </div>
 
             <div className="button-group">
