@@ -10,7 +10,7 @@ function Message(props) {
   useEffect(() => {
     setTimeout(() => {
       dispatch(deleteMessage(props.content))
-    }, 3000)
+    }, 4000)
     return setVisibility(false)
   }, [])
 

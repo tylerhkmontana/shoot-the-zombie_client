@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { socket } from '../App'
-import { useSelector } from 'react-redux'
 import { Gif } from '@giphy/react-components'
+import Icon from '@mdi/react'
+import { mdiPoliceBadge } from '@mdi/js'
 import './Leader.css'
 
 function Leader() {
-
-  const userId = useSelector(state => state.login.userId)
   const [leadersPower, setLeaderPower] = useState({
     numBullets: 0,
     targetPlayers: []
@@ -52,6 +51,7 @@ function Leader() {
   return (
     <div>
       <h1>You are Leader</h1>
+      <Icon path={mdiPoliceBadge} size={3} color={'#00fe00'}/>
 
       <p>You have {leadersPower.numBullets} bullets left.</p>
       {

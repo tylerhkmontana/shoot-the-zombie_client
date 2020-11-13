@@ -10,9 +10,9 @@ h1 {
 .message-group {
   display: flex;
   flex-direction: column;
-  width: 500px;
-  padding: 0 30px;
+  align-items: center;
+  width: 90vw;
+  margin: auto;
   top: 0;
-  right: 0;
   position: absolute;
 }

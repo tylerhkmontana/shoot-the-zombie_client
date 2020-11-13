@@ -1,13 +1,15 @@
 .Message {
-  background-color: rgb(0, 128, 128);
-  border-radius: 5px;
-  margin-top: 20px;
-  padding: 10px;
+  background-color: black;
+  border: 1px solid #00fe00;
+  margin-top: 10px;
+  padding: 5px;
+  min-width: 50vw;
 }
 
 .Message p {
   color: crimson;
   font-weight: bold;
+  text-align: center;
 }
 
 @keyframes fadeIn {

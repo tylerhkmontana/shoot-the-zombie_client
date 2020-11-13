@@ -1,0 +1,6 @@
+.game-status {
+  border: 1px solid #00fe00;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+}

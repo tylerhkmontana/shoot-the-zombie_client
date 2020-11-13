@@ -70,13 +70,13 @@ function Gameroom() {
 
   function setInfectionRate(isIncrease) {
     let infectionRate = gameSetting.infectionRate
-    let didReachMax = infectionRate === 30000 && isIncrease
-    let didReachMin = infectionRate === 10000 && !isIncrease
+    let didReachMax = infectionRate === 60000 && isIncrease
+    let didReachMin = infectionRate === 15000 && !isIncrease
     
     if (!didReachMax && !didReachMin) {
       setGameSetting({
         ...gameSetting,
-        infectionRate: isIncrease ? infectionRate + 1000 : infectionRate - 1000
+        infectionRate: isIncrease ? infectionRate + 5000 : infectionRate - 5000
       })
     }
   }
@@ -114,65 +114,57 @@ function Gameroom() {
             } 
           })
         }
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
-        <p>asdfasdfasdfasdf</p>
       </div>
 
-      <div className="game-setting">
-        <div className="setting">
-          <p style={{flex: 1}}>Infection_rate:</p>
-          <div style={{display: 'flex', justifyContent: 'space-between', flex: 1}}>
-            <Icon 
-              path={mdiMinusBox} 
-              size={1}
-              color="#00fe00"
-              onClick={() => setInfectionRate(false)}/>
-            <p>{gameSetting.infectionRate /1000} s</p>
-            <Icon 
-              path={mdiPlusBox}
-              size={1}
-              color="#00fe00"
-              onClick={() => setInfectionRate(true)}/>
-          </div>
-        </div>
-
-        <div className="setting">
-          <p style={{flex: 1}}>Initial_#bullets:</p>
-          <div style={{display: 'flex', justifyContent: 'space-between', flex: 1}}>
-            <Icon 
-              path={mdiMinusBox} 
-              size={1}
-              color="#00fe00"
-              onClick={() => setNumBullets(false)}/>
-            <span
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-              <Icon
-                path={mdiBullet}
+      {
+        isRoomMaster ?
+        <div className="game-setting">
+          <div className="setting">
+            <p style={{flex: 1}}>Infection_rate:</p>
+            <div style={{display: 'flex', justifyContent: 'space-between', flex: 1}}>
+              <Icon 
+                path={mdiMinusBox} 
                 size={1}
-                color="#00fe00"/>
-                X {gameSetting.numBullets}
-            </span>
-            <Icon 
-              path={mdiPlusBox}
-              size={1}
-              color="#00fe00"
-              onClick={() => setNumBullets(true)}/>
+                color="#00fe00"
+                onClick={() => setInfectionRate(false)}/>
+              <p>{gameSetting.infectionRate /1000} s</p>
+              <Icon 
+                path={mdiPlusBox}
+                size={1}
+                color="#00fe00"
+                onClick={() => setInfectionRate(true)}/>
+            </div>
           </div>
-        </div>
-        
-      </div>
+          <div className="setting">
+            <p style={{flex: 1}}>Initial_#bullets:</p>
+            <div style={{display: 'flex', justifyContent: 'space-between', flex: 1}}>
+              <Icon 
+                path={mdiMinusBox} 
+                size={1}
+                color="#00fe00"
+                onClick={() => setNumBullets(false)}/>
+              <span
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                <Icon
+                  path={mdiBullet}
+                  size={1}
+                  color="#00fe00"/>
+                  X {gameSetting.numBullets}
+              </span>
+              <Icon 
+                path={mdiPlusBox}
+                size={1}
+                color="#00fe00"
+                onClick={() => setNumBullets(true)}/>
+            </div>
+          </div> 
+        </div> : ''
+      }
+    
       <div className="button-group">
           {
             isRoomMaster ?

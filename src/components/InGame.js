@@ -4,6 +4,8 @@ import { roomCreated } from '../actions/gameroom.action'
 import { appointedTo } from '../actions/inGame.action'
 import { Route, useHistory } from 'react-router-dom'
 import { socket } from '../App'
+import Icon from '@mdi/react'
+import { mdiHuman, mdiSkull } from '@mdi/js'
 
 import Civilian from './Civilian'
 import Zombie from './Zombie'
@@ -53,7 +55,11 @@ function InGame() {
 
   return (
     <div>
-      <p>In Game</p>
+      <div className="game-status">
+        <img src="zombie.svg" width="25px"/>
+        <Icon path={mdiHuman} size={2}/>
+        <Icon path={mdiSkull} size={2}/>
+      </div>
       <Route path="/in-game/civilian" component={Civilian}/>
       <Route path="/in-game/zombie" component={Zombie}/>
       <Route path="/in-game/leader" component={Leader}/>
