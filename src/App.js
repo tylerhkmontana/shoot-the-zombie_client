@@ -15,11 +15,12 @@ import EnterGame from './components/EnterGame'
 import Gameroom from './components/Gameroom'
 import InGame from './components/InGame'
 import Message from './components/Message'
+import Gameover from './components/Gameover'
 
 var socket
 const ENDPOINT = process.env.ENDPOINT || 'http://127.0.0.1:5000'
 
-function App() {
+function App(props) {
   const isLogged = useSelector(state => state.login.isLogged)
   const messages = useSelector(state => state.message.messages)
   const dispatch = useDispatch()
@@ -66,6 +67,13 @@ function App() {
           {
             isLogged ? 
               <InGame /> :
+              <Redirect to='/' />
+          }
+        </Route>
+        <Route path="/gameover/:winner">
+          {
+            isLogged ? 
+              <Gameover /> :
               <Redirect to='/' />
           }
         </Route>

@@ -1,15 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { socket } from '../App'
 
-function Gameover(props) {
+function Gameover() {
 
   const roomInfo = useSelector(state => state.gameroom)
   const [roomMaster] = roomInfo.players
   const userId = useSelector(state => state.login.userId)
   const userRole = useSelector(state => state.inGame.role)
-  const winner = props.match.params.winner
+  const { winner } = useParams()
   const { push } = useHistory()
 
   function moveToRoom() {

@@ -16,7 +16,7 @@ function Gameroom() {
   const [isRoomMaster, setIsRoomMaster] = useState(false)
   const [gameSetting, setGameSetting] = useState({
     numBullets: 1,
-    infectionRate: 10000
+    infectionRate: 15000
   })
   
   useEffect(() => {

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { roomCreated } from '../actions/gameroom.action'
 import { appointedTo } from '../actions/inGame.action'
 import { Route, useHistory } from 'react-router-dom'
@@ -11,15 +11,25 @@ import Civilian from './Civilian'
 import Zombie from './Zombie'
 import Leader from './Leader'
 import Dead from './Dead'
-import Gameover from './Gameover'
 
 function InGame() {
   const dispatch = useDispatch()
   const { push } = useHistory()
 
+  const [virusTimer, setVirusTimer] = useState(0)
+
   useEffect(() => {
-    // socket.emit('what is my role', userId)
-    
+    socket.on('virus timer', (count) => {
+      let currCount = count/1000
+      setVirusTimer(currCount)
+      const countTimer = setInterval(() => {
+        setVirusTimer(--currCount)
+        if (currCount === 0) {
+          clearTimeout(countTimer)
+        }
+      }, 1000)
+    })
+
     socket.on('appointed to zombie', () => {
       console.log("YOU ARE THE ZOMBIE")
       dispatch(appointedTo('zombie'))
@@ -44,7 +54,7 @@ function InGame() {
     })
 
     socket.on("Gameover", winner => {
-      setTimeout(() => push(`/in-game/gameover/${winner}`), 3000)
+      setTimeout(() => push(`/gameover/${winner}`), 3000)
     })
 
     socket.on("move to room", roomInfo => {
@@ -56,6 +66,7 @@ function InGame() {
   return (
     <div>
       <div className="game-status">
+        <p>Zombie virus will spread in {virusTimer} sec...</p>
         <img src="zombie.svg" width="25px"/>
         <Icon path={mdiHuman} size={2}/>
         <Icon path={mdiSkull} size={2}/>
@@ -64,7 +75,6 @@ function InGame() {
       <Route path="/in-game/zombie" component={Zombie}/>
       <Route path="/in-game/leader" component={Leader}/>
       <Route path="/in-game/dead" component={Dead} />
-      <Route path="/in-game/gameover/:winner" component={Gameover} />
     </div>
   )
 }
