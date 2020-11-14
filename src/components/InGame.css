@@ -3,4 +3,11 @@
   width: 90vw;
   display: flex;
   flex-direction: column;
+  margin: auto;
+}
+
+.game-status p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

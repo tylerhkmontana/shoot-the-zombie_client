@@ -11,9 +11,14 @@ function Leader() {
     targetPlayers: []
   })
 
+  const [reloadCount, setReloadCount] = useState(0)
+
   const [gifData, setGifData] = useState(null)
 
   useEffect(() => {
+    let reloadBullet
+    let reloadCountTimer
+
     socket.emit("I am the leader")
 
     socket.emit("request gif")
@@ -23,9 +28,31 @@ function Leader() {
     socket.on("gif updated", response => setGifData(response))
 
     socket.on("receive bullets", payload => {
+      let count = payload.reloadInterval /1000
+      setReloadCount(count)
+      reloadCountTimer = setInterval(() => {
+        setReloadCount(--count)
+        if(count === 0) {
+          clearInterval(reloadCountTimer)
+        }
+      }, 1000)
+      
+      setTimeout(() => {  
+        socket.emit("reload bullet")
+      }, payload.reloadInterval)
+      
       setLeaderPower({
         numBullets: payload.numBullets,
         targetPlayers: payload.targetPlayers
+      })
+    })
+
+    socket.on("receive targetlist", list => {
+      setLeaderPower(prevState => {
+        return {
+          ...prevState,
+          targetPlayers: list
+        }
       })
     })
 
@@ -34,13 +61,9 @@ function Leader() {
       clearInterval(reloadBullet)
     })
 
-    const reloadBullet = setInterval(() => {
-      socket.emit("reload bullet")
-      console.log("Reloading")
-    }, 5000)
-
     return function cleanup() {
-      clearInterval(reloadBullet)
+      clearTimeout(reloadBullet)
+      clearInterval(reloadCountTimer)
     }
   }, [])
 
@@ -54,6 +77,7 @@ function Leader() {
       <Icon path={mdiPoliceBadge} size={3} color={'#00fe00'}/>
 
       <p>You have {leadersPower.numBullets} bullets left.</p>
+      <p>A bullet will be supplied in {reloadCount} sec...</p>
       {
         leadersPower.targetPlayers.map(player => {
           return <button className="target-players" onClick={() => killPlayer(player.id)} key={player.id}>{player.userName}</button>

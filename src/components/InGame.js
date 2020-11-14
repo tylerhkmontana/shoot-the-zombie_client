@@ -12,11 +12,18 @@ import Zombie from './Zombie'
 import Leader from './Leader'
 import Dead from './Dead'
 
+import './InGame.css'
+
 function InGame() {
   const dispatch = useDispatch()
   const { push } = useHistory()
 
   const [virusTimer, setVirusTimer] = useState(0)
+  const [gameStatus, setGameStatus] = useState({
+    zombie: 0,
+    civilian: 0,
+    dead: 0
+  })
 
   useEffect(() => {
     socket.on('virus timer', (count) => {
@@ -28,6 +35,12 @@ function InGame() {
           clearTimeout(countTimer)
         }
       }, 1000)
+    })
+
+    socket.on('update status', status => {
+      setGameStatus({
+        ...status
+      })
     })
 
     socket.on('appointed to zombie', () => {
@@ -54,7 +67,7 @@ function InGame() {
     })
 
     socket.on("Gameover", winner => {
-      setTimeout(() => push(`/gameover/${winner}`), 3000)
+      setTimeout(() => push(`/gameover/${winner}`), 5000)
     })
 
     socket.on("move to room", roomInfo => {
@@ -66,10 +79,11 @@ function InGame() {
   return (
     <div>
       <div className="game-status">
-        <p>Zombie virus will spread in {virusTimer} sec...</p>
-        <img src="zombie.svg" width="25px"/>
-        <Icon path={mdiHuman} size={2}/>
-        <Icon path={mdiSkull} size={2}/>
+        <p>[Game Status]</p>
+        <p><img src="zombie.svg" width="25px"/> x {gameStatus.zombie}</p>
+        <p><Icon path={mdiHuman} size={2}/> x {gameStatus.civilian}</p>
+        <p><Icon path={mdiSkull} size={2}/> x {gameStatus.dead}</p>
+        <p style={{color: 'crimson'}}>Zombie virus will spread in {virusTimer} sec...</p>
       </div>
       <Route path="/in-game/civilian" component={Civilian}/>
       <Route path="/in-game/zombie" component={Zombie}/>

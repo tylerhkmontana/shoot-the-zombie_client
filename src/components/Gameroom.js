@@ -16,7 +16,8 @@ function Gameroom() {
   const [isRoomMaster, setIsRoomMaster] = useState(false)
   const [gameSetting, setGameSetting] = useState({
     numBullets: 1,
-    infectionRate: 15000
+    infectionRate: 15000,
+    reloadInterval: 15000
   })
   
   useEffect(() => {
@@ -81,6 +82,19 @@ function Gameroom() {
     }
   }
 
+  function setReloadInterval(isIncrease) {
+    let reloadInterval = gameSetting.reloadInterval
+    let didReachMax = reloadInterval === 60000 && isIncrease
+    let didReachMin = reloadInterval === 10000 && !isIncrease
+    
+    if (!didReachMax && !didReachMin) {
+      setGameSetting({
+        ...gameSetting,
+        reloadInterval: isIncrease ? reloadInterval + 5000 : reloadInterval - 5000
+      })
+    }
+  }
+
   return (
     <div className="Gameroom">
 
@@ -133,6 +147,22 @@ function Gameroom() {
                 size={1}
                 color="#00fe00"
                 onClick={() => setInfectionRate(true)}/>
+            </div>
+          </div>
+          <div className="setting">
+            <p style={{flex: 1}}>Reload_interval:</p>
+            <div style={{display: 'flex', justifyContent: 'space-between', flex: 1}}>
+              <Icon 
+                path={mdiMinusBox} 
+                size={1}
+                color="#00fe00"
+                onClick={() => setReloadInterval(false)}/>
+              <p>{gameSetting.reloadInterval /1000} s</p>
+              <Icon 
+                path={mdiPlusBox}
+                size={1}
+                color="#00fe00"
+                onClick={() => setReloadInterval(true)}/>
             </div>
           </div>
           <div className="setting">

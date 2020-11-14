@@ -1,13 +1,12 @@
 .Message {
-  background-color: black;
-  border: 1px solid #00fe00;
-  margin-top: 10px;
+  background-color: #00fe00dc;
+  margin: 10px 5px 0px 5px;
   padding: 5px;
   min-width: 50vw;
 }
 
 .Message p {
-  color: crimson;
+  color: black;
   font-weight: bold;
   text-align: center;
 }
