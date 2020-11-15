@@ -26,21 +26,28 @@ function InGame() {
   })
 
   useEffect(() => {
+    let mounted = true
+    let gameoverTimeout
+
     socket.on('virus timer', (count) => {
-      let currCount = count/1000
-      setVirusTimer(currCount)
-      const countTimer = setInterval(() => {
-        setVirusTimer(--currCount)
-        if (currCount === 0) {
-          clearTimeout(countTimer)
-        }
-      }, 1000)
+      if (mounted) {
+        let currCount = count/1000
+        setVirusTimer(currCount)
+        const countTimer = setInterval(() => {
+          setVirusTimer(--currCount)
+          if (currCount === 0) {
+            clearTimeout(countTimer)
+          }
+        }, 1000)
+      }
     })
 
     socket.on('update status', status => {
-      setGameStatus({
-        ...status
-      })
+      if(mounted) {
+        setGameStatus({
+          ...status
+        })
+      }
     })
 
     socket.on('appointed to zombie', () => {
@@ -67,13 +74,19 @@ function InGame() {
     })
 
     socket.on("Gameover", winner => {
-      setTimeout(() => push(`/gameover/${winner}`), 5000)
+      gameoverTimeout = setTimeout(() => push(`/gameover/${winner}`), 5000)
     })
+
 
     socket.on("move to room", roomInfo => {
       dispatch(roomCreated(roomInfo))
       push(`/game-room/${roomInfo.roomcode}`)
     })
+    
+    return function cleanup() {
+      mounted = false
+      clearTimeout(gameoverTimeout)
+    }
   }, [])
 
   return (

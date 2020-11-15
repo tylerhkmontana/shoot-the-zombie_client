@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { socket } from '../App'
-import { useHistory } from 'react-router-dom'
 import { Gif } from '@giphy/react-components'
 import './Civilian.css'
 
 function Civilian() {
   useEffect(() => {
+    let mounted = true
     socket.emit("request gif")
     
-    socket.on("response gif", response => setGifData(response))
+    socket.on("response gif", response => {
+      if (mounted) {
+        setGifData(response)
+      }
+    })
 
-    socket.on("gif updated", response => setGifData(response))
+    socket.on("gif updated", response => {
+      if (mounted) {
+        setGifData(response)
+      }
+    })
+    
+    return function cleanup() {
+      mounted = false
+    }
   }, [])
 
   const [gifData, setGifData] = useState(null)

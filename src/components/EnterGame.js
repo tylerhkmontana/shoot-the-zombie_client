@@ -25,7 +25,7 @@ function EnterGame() {
 
   return (
     <div className="Entergame">
-      <img className="welcome-zombie" src="entrance_zombie.gif"/>
+      <img className="welcome-zombie" src="entrance_zombie.gif" alt="entrance_zombie_image"/>
       <div className="input-group">
         <input placeholder="name" 
           onChange={event => setCurrUserName(event.target.value.trim())} />

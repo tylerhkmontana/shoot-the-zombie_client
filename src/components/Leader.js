@@ -16,42 +16,56 @@ function Leader() {
   useEffect(() => {
     let reloadBullet
     let reloadCountTimer
+    let mounted = true
 
     socket.emit("I am the leader")
 
     socket.emit("request gif")
     
-    socket.on("response gif", response => setGifData(response))
+    socket.on("response gif", response => {
+      if(mounted) {
+        setGifData(response)
+      }
+    })
 
-    socket.on("gif updated", response => setGifData(response))
+    socket.on("gif updated", response => {
+      if (mounted) {
+        setGifData(response)
+      }
+    })
 
     socket.on("receive bullets", payload => {
-      let count = payload.reloadInterval /1000
-      setReloadCount(count)
-      reloadCountTimer = setInterval(() => {
-        setReloadCount(--count)
-        if(count === 0) {
-          clearInterval(reloadCountTimer)
-        }
-      }, 1000)
-      
-      setTimeout(() => {  
-        socket.emit("reload bullet")
-      }, payload.reloadInterval)
-      
-      setLeaderPower({
-        numBullets: payload.numBullets,
-        targetPlayers: payload.targetPlayers
-      })
+      if (mounted) {
+        let count = payload.reloadInterval /1000
+        setReloadCount(count)
+        reloadCountTimer = setInterval(() => {
+          setReloadCount(--count)
+          if(count === 0) {
+            clearInterval(reloadCountTimer)
+          }
+        }, 1000)
+        
+        reloadBullet = setTimeout(() => {  
+          socket.emit("reload bullet")
+        }, payload.reloadInterval)
+        
+        setLeaderPower({
+          numBullets: payload.numBullets,
+          targetPlayers: payload.targetPlayers
+        })
+      }
     })
 
     socket.on("receive targetlist", list => {
-      setLeaderPower(prevState => {
-        return {
-          ...prevState,
-          targetPlayers: list
-        }
-      })
+      if (mounted) {
+        setLeaderPower(prevState => {
+          console.log(prevState)
+          return {
+            ...prevState,
+            targetPlayers: list
+          }
+        })
+      }
     })
 
     socket.on("Gameover", () => {
@@ -62,6 +76,7 @@ function Leader() {
     return function cleanup() {
       clearTimeout(reloadBullet)
       clearInterval(reloadCountTimer)
+      mounted = false
     }
   }, [])
 

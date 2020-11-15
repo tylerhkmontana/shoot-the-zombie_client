@@ -29,9 +29,9 @@ function Gameover() {
 
   const banner = () => {
     if (userRole === 'zombie') {
-      return <img src={userRole === winner ? zombieWin : zombieLose}/>
+      return <img src={userRole === winner ? zombieWin : zombieLose} alt="zombie_lose_or_win"/>
     } else {
-      return <img src={userRole === winner ? civilianWin : civilianLose}/>
+      return <img src={userRole === winner ? civilianWin : civilianLose} alt="civilian_lose_or_win"/>
     }
   }
 
