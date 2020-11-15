@@ -1,0 +1,9 @@
+.Zombie {
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+}
+
+.Zombie img {
+  width: 40vw;
+}

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { socket } from '../App'
 import { Gif } from '@giphy/react-components'
-import Icon from '@mdi/react'
-import { mdiPoliceBadge } from '@mdi/js'
 import './Leader.css'
 
 function Leader() {
@@ -72,18 +70,31 @@ function Leader() {
   } 
 
   return (
-    <div>
-      <h1>You are Leader</h1>
-      <Icon path={mdiPoliceBadge} size={3} color={'#00fe00'}/>
+    <div className="Leader">
+      <h1>You are the Leader</h1>
 
-      <p>You have {leadersPower.numBullets} bullets left.</p>
-      <p>A bullet will be supplied in {reloadCount} sec...</p>
-      {
-        leadersPower.targetPlayers.map(player => {
-          return <button className="target-players" onClick={() => killPlayer(player.id)} key={player.id}>{player.userName}</button>
-        })
-      }
-
+      <div className="instruction">
+        <span>[Instruction]</span>
+        <p>*Choose whom to kill</p>
+        <p>**If you kill an innocent civilian, you lose your position.</p>
+        <p>***Stop the virus!!!</p>
+      </div>
+      <br/>
+      <div className="leader-power">
+        <p>{leadersPower.numBullets} bullet(s) left.</p>
+        <p>bullet++ in {reloadCount} sec...</p>
+        <span>[Target List]</span>
+        <div className="target-list">
+        {
+          leadersPower.targetPlayers.map(player => {
+            return <button className="target-players" onClick={() => killPlayer(player.id)} key={player.id}>{player.userName}</button>
+          })
+        }
+        </div>
+      </div>
+    
+      
+      <p>[SECRET GIF]</p>
       {
         gifData ? <Gif gif={gifData} width={300}/> : <p>NO GIF RECEIVED</p>
       }

@@ -42,3 +42,8 @@ button {
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4); 
 }
+
+.positive-button {
+  border: 1px solid #00fe00;
+  color: #00fe00;
+}

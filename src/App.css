@@ -15,3 +15,14 @@ h1 {
   top: 0;
   position: absolute;
 }
+
+.instruction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 95vw;
+}
+
+.instruction > p {
+  color: white;
+}

@@ -22,6 +22,7 @@ const ENDPOINT = process.env.ENDPOINT || 'http://127.0.0.1:5000'
 
 function App(props) {
   const isLogged = useSelector(state => state.login.isLogged)
+  const userName = useSelector(state => state.login.userName)
   const messages = useSelector(state => state.message.messages)
   const dispatch = useDispatch()
 
@@ -47,6 +48,9 @@ function App(props) {
         </div>
        
         <h1 style={{color: 'crimson'}}>Shoot the zombie</h1>
+        {
+          isLogged ? <p style={{textAlign: "center", color: "#00ffff", marginBottom: '10px'}}>Logged In: {userName}</p> : ''
+        }
 
         <Route exact path="/" component={EnterGame}/>  
         <Route path="/menu">

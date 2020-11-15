@@ -1,3 +1,28 @@
+.Leader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.leader-power {
+  width: 95vw;
+  border: 1px solid #00fe00;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+
+.leader-power > p {
+  color: white;
+}
+
+.target-list {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
 .target-players {
   border: 1px solid black;
   background-color: transparent;
@@ -10,3 +35,4 @@
   background-color: crimson;
   color: white;
 }
+

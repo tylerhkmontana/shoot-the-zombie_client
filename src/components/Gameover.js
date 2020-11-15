@@ -2,6 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { socket } from '../App'
+import './Gameover.css'
+
+import zombieWin from './images/zombie_win.png'
+import zombieLose from './images/zombie_lose.jpg'
+import civilianWin from './images/civilian_win.png'
+import civilianLose from './images/civilian_lose.jpg'
 
 function Gameover() {
 
@@ -21,13 +27,33 @@ function Gameover() {
     push('/menu')
   }
 
+  const banner = () => {
+    if (userRole === 'zombie') {
+      return <img src={userRole === winner ? zombieWin : zombieLose}/>
+    } else {
+      return <img src={userRole === winner ? civilianWin : civilianLose}/>
+    }
+  }
+
   return (
-    <div>
+    <div className="Gameover">
       <h1>Game Over</h1>
-      <p>Winner: {winner}</p>
-      <p>{userRole === winner ? "You Win!" : "You Lose!"}</p>
-      {roomMaster.id === userId ? <button onClick={moveToRoom}>Restart</button> : ''}
-      <button onClick={exitRoom}>Exit</button>
+    
+      {
+        userRole === winner ? 
+          <p>You Win!</p> :
+          <p style={{color: 'crimson'}}>You Lose...</p>
+      }
+      { banner() }
+
+      <div className="button-group">
+        { 
+          roomMaster.id === userId ? 
+            <button className="positive-button" onClick={moveToRoom}>Restart</button> : 
+            <p>Waiting for RoomMaster to restart...</p> 
+        }
+        <button onClick={exitRoom}>Exit</button>
+      </div>
     </div>
   )
 }

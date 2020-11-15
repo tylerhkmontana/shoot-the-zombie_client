@@ -198,7 +198,7 @@ function Gameroom() {
       <div className="button-group">
           {
             isRoomMaster ?
-              <button onClick={startGame}>Start</button> :
+              <button className="positive-button" onClick={startGame}>Start</button> :
               ''
           }
           <button onClick={exitRoom}>Exit</button>

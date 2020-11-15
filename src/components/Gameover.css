@@ -1,0 +1,24 @@
+.Gameover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Gameover img {
+  width: 100vw;
+}
+
+.Gameover .button-group {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 95vw;
+}
+
+.Gameover button {
+  margin-bottom: 10px;
+}
+
+.Gameover .button-group p {
+  margin-bottom: 15px;
+}
