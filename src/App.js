@@ -18,7 +18,7 @@ import Message from './components/Message'
 import Gameover from './components/Gameover'
 
 var socket
-const ENDPOINT = process.env.ENDPOINT || 'http://127.0.0.1:5000'
+const ENDPOINT = process.env.REACT_APP_ENDPOINT || 'http://127.0.0.1:5000'
 
 function App(props) {
   const isLogged = useSelector(state => state.login.isLogged)
@@ -80,6 +80,9 @@ function App(props) {
               <Gameover /> :
               <Redirect to='/' />
           }
+        </Route>
+        <Route path="*">
+          <Redirect to="/" />
         </Route>
       </div>
     </Router>

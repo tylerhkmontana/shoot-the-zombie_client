@@ -33,7 +33,7 @@ function Civilian() {
 
       <div className="instruction">
       <span>[Instruction]</span>
-        <p>*Be cooperative with the leader</p>
+        <p>*Be cooperative with the sheriff</p>
         <p>**Think of a word relevent to 'SECRET GIF'</p>
         <p>***Stop the virus!!!</p>
       </div>

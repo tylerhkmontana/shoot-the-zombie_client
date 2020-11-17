@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { socket } from '../App'
 import { Gif } from '@giphy/react-components'
-import './Leader.css'
+import './Sheriff.css'
 
-function Leader() {
-  const [leadersPower, setLeaderPower] = useState({
+function Sheriff() {
+  const [sheriffPower, setSheriffPower] = useState({
     numBullets: 0,
     targetPlayers: []
   })
@@ -18,7 +18,7 @@ function Leader() {
     let reloadCountTimer
     let mounted = true
 
-    socket.emit("I am the leader")
+    socket.emit("I am the sheriff")
 
     socket.emit("request gif")
     
@@ -49,7 +49,7 @@ function Leader() {
           socket.emit("reload bullet")
         }, payload.reloadInterval)
         
-        setLeaderPower({
+        setSheriffPower({
           numBullets: payload.numBullets,
           targetPlayers: payload.targetPlayers
         })
@@ -58,7 +58,7 @@ function Leader() {
 
     socket.on("receive targetlist", list => {
       if (mounted) {
-        setLeaderPower(prevState => {
+        setSheriffPower(prevState => {
           console.log(prevState)
           return {
             ...prevState,
@@ -81,12 +81,12 @@ function Leader() {
   }, [])
 
   function killPlayer(targetId) {
-    socket.emit("leader shoots player", targetId)
+    socket.emit("sheriff shoots player", targetId)
   } 
 
   return (
-    <div className="Leader">
-      <h1>You are the Leader</h1>
+    <div className="Sheriff">
+      <h1>You are the sheriff</h1>
 
       <div className="instruction">
         <span>[Instruction]</span>
@@ -95,13 +95,13 @@ function Leader() {
         <p>***Stop the virus!!!</p>
       </div>
       <br/>
-      <div className="leader-power">
-        <p>{leadersPower.numBullets} bullet(s) left.</p>
+      <div className="sheriff-power">
+        <p>{sheriffPower.numBullets} bullet(s) left.</p>
         <p>bullet++ in {reloadCount} sec...</p>
         <span>[Target List]</span>
         <div className="target-list">
         {
-          leadersPower.targetPlayers.map(player => {
+          sheriffPower.targetPlayers.map(player => {
             return <button className="target-players" onClick={() => killPlayer(player.id)} key={player.id}>{player.userName}</button>
           })
         }
@@ -117,4 +117,4 @@ function Leader() {
   )
 }
 
-export default Leader
+export default Sheriff

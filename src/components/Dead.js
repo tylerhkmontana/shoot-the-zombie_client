@@ -1,9 +1,12 @@
 import React from 'react'
+import graveStone from './images/grave_stone.png'
+import './Dead.css'
 
 function Dead() {
   return (
-    <div>
-      <h1>You are Dead!</h1>
+    <div className="Dead">
+      <h1>RIP</h1>
+      <img src={graveStone}/>
     </div>
   )
 }

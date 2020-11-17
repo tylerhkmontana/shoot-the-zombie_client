@@ -9,7 +9,7 @@ import { mdiHuman, mdiSkull } from '@mdi/js'
 
 import Civilian from './Civilian'
 import Zombie from './Zombie'
-import Leader from './Leader'
+import Sheriff from './Sheriff'
 import Dead from './Dead'
 
 import './InGame.css'
@@ -56,10 +56,10 @@ function InGame() {
       push("/in-game/zombie")
     })
 
-    socket.on('appointed to leader', () => {
-      console.log("YOU ARE THE LEADER")
+    socket.on('appointed to sheriff', () => {
+      console.log("YOU ARE THE SHERIFF")
       dispatch(appointedTo('civilian'))
-      push("/in-game/leader")
+      push("/in-game/sheriff")
     })
 
     socket.on('appointed to civilian', () => {
@@ -100,7 +100,7 @@ function InGame() {
       </div>
       <Route path="/in-game/civilian" component={Civilian}/>
       <Route path="/in-game/zombie" component={Zombie}/>
-      <Route path="/in-game/leader" component={Leader}/>
+      <Route path="/in-game/sheriff" component={Sheriff}/>
       <Route path="/in-game/dead" component={Dead} />
     </div>
   )

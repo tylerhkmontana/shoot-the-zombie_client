@@ -1,0 +1,8 @@
+.Dead {
+  display: flex;
+  flex-direction: column;
+}
+
+.Dead img {
+  height: 350px;
+}
